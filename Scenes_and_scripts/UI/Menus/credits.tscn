@@ -125,13 +125,6 @@ layout_mode = 2
 text = "Aseprite"
 horizontal_alignment = 1
 
-[node name="Donate" parent="PanelContainer/VBoxContainer" instance=ExtResource("2_rnov3")]
-layout_mode = 2
-minimum_size = Vector2(110, 23)
-text = "Donate on KoFi "
-icon = ExtResource("4_6crf1")
-expand_icon = true
-
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Header/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/GridContainer/GodotIcon" to="." method="_on_godot_icon_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/GridContainer/AsepriteIcon" to="." method="_on_aseprite_icon_pressed"]
