@@ -225,7 +225,6 @@ offset_left = 7.0
 offset_top = -5.0
 offset_right = 22.0
 offset_bottom = 7.0
-text = "1"
 label_settings = SubResource("LabelSettings_hhkv1")
 vertical_alignment = 1
 
