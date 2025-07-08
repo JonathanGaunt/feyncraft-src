@@ -10,6 +10,7 @@ const MAX_NEXT_INTERACTION_ATTEMPTS : int = 100
 const MAX_INTERACTION_GENERATION_ATTEMPTS : int = 300
 
 const MAX_INITIAL_STATE_PARTICLE_COUNT : int = 2
+const MAX_TRIES = 200
 
 const g_min_degree: int = 2
 const g_max_degree: int = 5
@@ -49,12 +50,16 @@ func generate(
 		use_hadrons,
 		useable_particles
 	)
-	var state_particles : Array[Array] = get_state_particles(
-		min_particle_count,
-		max_particle_count,
-		useable_state_interactions,
-		use_hadrons
-	)
+	var state_particles : Array[Array]
+	while state_particles.is_empty():
+		# keep trying to generate states until a valid one is found
+		state_particles = get_state_particles(
+			min_particle_count,
+			max_particle_count,
+			useable_state_interactions,
+			use_hadrons
+		)
+		total_tries = 0
 	
 	print("end")
 	print(state_particles[0].size())
@@ -168,6 +173,41 @@ func is_energy_conserved(state_interactions: Array) -> bool:
 			return false
 	
 	return true
+
+func get_color_particles(state):
+	var colored : Array[int] = []
+	for p in state:
+		if len(p) == 1:
+			if p[0] == 1: # we have a gluon
+				colored.append(0)
+			elif p[0] >= 13: # we have a quark
+				colored.append(1)
+			elif p[0] <= -13: # we have an antiquark
+				colored.append(-1)
+	return colored
+
+func has_color_assignment(initial_state, final_state):
+	var initial_colors = get_color_particles(initial_state)
+	var final_colors = get_color_particles(final_state)
+
+	# move the final colors into the initial colors with anti colors so we 
+	# just need to find a color assignment for this extended initial state
+	for p in final_colors:
+		initial_colors.append(-p)
+
+	# special case: a single gluon cannot be color neutral.
+	if len(initial_colors) == 1 and initial_colors[0] == 0:
+		return false
+
+	# for a color neutral state the number of quarks minus the number of
+	# antiquarks must be divisible by 3
+	var sum = 0
+	for p in initial_colors:
+		sum += p
+	if sum % 3 == 0:
+		return true
+	else:
+		return false
 
 func is_lone_hadron_decay(state_interactions: Array) -> bool:
 	if state_interactions[StateLine.State.Initial].size() != 1:
@@ -380,6 +420,9 @@ func get_next_state_particles(
 		total_tries += 1
 		if !are_state_interactions_valid(state_particles):
 			return []
+			
+		if !has_color_assignment(state_particles[0], state_particles[1]):
+			return []
 		
 		var solution : ConnectionMatrix = SolutionGeneration.generate_diagrams(
 			state_particles[StateLine.State.Initial],
@@ -400,7 +443,9 @@ func get_next_state_particles(
 	
 	var state : StateLine.State
 	
-	print(state_particles[StateLine.State.Initial].size())
+	total_tries += 1
+	if total_tries > MAX_TRIES:
+		return []
 	
 	if state_particles[StateLine.State.Initial].is_empty():
 		state = StateLine.State.Initial
@@ -441,8 +486,11 @@ func get_next_state_particles(
 			new_state_particles,
 			hadron_count - int(is_hadron(particle)),
 			next_W_count
-		)
-		
+		) 
+
+		if total_tries > MAX_TRIES:
+			return []
+
 		if new_state_particles.is_empty():
 			continue
 		

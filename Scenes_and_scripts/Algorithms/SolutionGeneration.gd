@@ -59,7 +59,7 @@ func generate_diagrams(
 	var degrees_to_check := get_degrees_to_check(
 		min_degree, max_degree, base_interaction_matrix
 	)
-
+	
 	var generated_connection_matrices : Array[ConnectionMatrix] = []
 	var base_matrix := convert_interaction_matrix_to_in_out(base_interaction_matrix)
 	
@@ -993,6 +993,9 @@ func connect_4interaction(
 ) -> Array[InteractionMatrix]:
 	var unconnected_particle_count: int = unconnected_particles.size()
 	var interaction_size: int = interaction.size()
+	
+	if len(interaction) < 3:
+		return []
 	
 	var particleA: ParticleData.Particle = interaction[0] as ParticleData.Particle
 	var particleB: ParticleData.Particle = interaction[1] as ParticleData.Particle
