@@ -81,7 +81,6 @@ func update_solution_creation(_submitted_diagram_count: int) -> void:
 		else:
 			solution_creation.set_max_solution_count(submitted_diagram_count)
 	else:
-		solution.disabled(false)
 		solution_creation.update_no_custom_solutions(false)
 		solution_creation.set_max_solution_count(total_solution_count)
 	
