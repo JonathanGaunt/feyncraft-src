@@ -423,6 +423,9 @@ func is_no_H_valid(particles := connected_particles) -> bool:
 	
 	if no_H_lines.size() == 1 and no_H_lines[0].particle == ParticleData.Particle.Z:
 		return false
+
+	if no_H_lines.size() == 3:
+		return false	
 	
 	return validate(no_H_lines)
 
