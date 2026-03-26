@@ -1,0 +1,36 @@
+FEYNCRAFT: INSTALLATION GUIDE
+
+PLAY INSTANTLY IN YOUR BROWSER! (RECOMMENDED)
+Before diving into the technical installation, we want to highlight one of the key selling points of FeynCraft: there is absolutely no installation required to play! You can enjoy the full game directly in your web browser without worrying about downloading files, compiling code, or managing dependencies. Simply visit our page on itch.io to start learning and drawing Feynman diagrams immediately:
+
+Play FeynCraft here: https://jgaunt.itch.io/feyncraft
+
+--------------------------------------------------
+
+LOCAL INSTALLATION INSTRUCTIONS
+
+If you are a developer, an educator looking to modify the game, or if you simply prefer to run the game locally on your own machine, you can easily do so. FeynCraft is open-source and built using the Godot game engine. 
+
+Here are the steps to get the game running locally from the source code:
+
+STEP 1: DOWNLOAD THE SOURCE CODE
+First, you need to download the FeynCraft project repository.
+- Visit the GitHub repository: https://github.com/JonathanGaunt/feyncraft-src
+- Click the green "Code" button and select "Download ZIP" (extract the folder once downloaded).
+- Alternative for Git users: You can clone the repository directly via your terminal using the command: git clone https://github.com/JonathanGaunt/feyncraft-src.git
+
+STEP 2: DOWNLOAD THE GODOT ENGINE
+To open and compile the game, you will need the Godot Engine.
+- Visit the official Godot download page: https://godotengine.org/download
+- Download the standard version for your operating system (Windows, macOS, or Linux).
+- Godot is wonderfully lightweight and doesn't require a traditional installation. Simply extract the downloaded ZIP file and run the executable inside.
+
+STEP 3: IMPORT AND RUN THE GAME
+Now, you can compile and run FeynCraft just like any other Godot project:
+1. Open the Godot Engine application.
+2. In the Project Manager window, click the "Import" button.
+3. Click "Browse" and navigate to the FeynCraft folder you downloaded and extracted in Step 1.
+4. Select the "project.godot" file and click "Import & Edit".
+5. Once the project finishes loading in the editor, you can run the game by clicking the Play icon in the top-right corner, or by pressing F5 on your keyboard.
+
+(Optional) If you want to create a standalone, clickable executable for your computer so you don't have to open the Godot editor every time, you can do so by navigating to Project > Export in the top menu of the Godot editor.
